@@ -87,7 +87,7 @@ var exponent = function(base, exp) {
     if (exp % 2 === 0) {
       return base = exponent(base, exp / 2) * exponent(base, exp / 2);
     } else {
-      return base = base / exponent(base, exp + 1));
+      return base = -1 / (base / exponent(base, exp + 1));
     }
   }
 };
@@ -113,7 +113,28 @@ var reverse = function(string) {
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
-  
+  string = string.replace(/\s/, "");
+  if (string.length % 2 === 0) {
+    if (string.length === 0) {
+      return true;
+    } else {
+      if (string[0].toLowerCase() === string[string.length - 1].toLowerCase()) {
+        return palindrome(string.slice(1, string.length - 1));
+      } else {
+        return false;
+      }
+    }
+  } else {
+    if (string.length === 1) {
+      return true;
+    } else {
+      if (string[0].toLowerCase() === string[string.length - 1].toLowerCase()) {
+        return palindrome(string.slice(1, string.length - 1))
+      } else {
+        return false;
+      }
+    }
+  }
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
@@ -122,11 +143,66 @@ var palindrome = function(string) {
 // modulo(17,5) // 2
 // modulo(22,6) // 4
 var modulo = function(x, y) {
+  if (x === 0 && y === 0) return NaN;
+  if (x < 0 && y > 0) {
+    if (x === 0 || x + y === 0) {
+      return 0;
+    } else if (x > y || x > (0 - y)) {
+      return x;
+
+    } else if (x + y < y && x + y > 0) {
+      return x + y;
+    } else {
+      return modulo(x + y, y);
+    }
+  } else if (x < 0 && y < 0) {
+    if (x === 0 || x - y === 0) {
+      return 0;
+    } else if (x > y || x > (0 - y)) {
+      return x;
+    } else {
+      return modulo(x - y, y);
+    }
+  } else {
+    if (x === 0 || x - y === 0) {
+      return 0;
+    } else if (x < y) {
+      return x;
+    } else {
+      return modulo(x - y, y);
+    }
+  }
 };
 
 // 12. Write a function that multiplies two numbers without using the * operator  or
 // JavaScript's Math object.
 var multiply = function(x, y) {
+  if (x === 0 || y === 0) return 0;
+  if (x < 0 && y < 0) {
+    if (y === -1) {
+      return x;
+    } else {
+      return x + multiply(x, y + 1);
+    }
+  } else if (x > 0 && y < 0){
+    if (y === -1) {
+      return x;
+    } else {
+      return x + multiply(x, y + 1);
+    }
+  } else if (x < 0 && y > 0) {
+    if (y === 1) {
+      return x;
+    } else {
+      return x + multiply(x, y - 1);
+    }
+  } else {
+    if (y === 1) {
+      return x;
+    } else {
+      return x + multiply(x, y - 1);
+    }
+  }
 };
 
 // 13. Write a function that divides two numbers without using the / operator  or
@@ -148,11 +224,27 @@ var gcd = function(x, y) {
 // compareStr('', '') // true
 // compareStr('tomato', 'tomato') // true
 var compareStr = function(str1, str2) {
+  if (str1 === "" && str2 === "") {
+    return true;
+  } else if (str1[0] == 'undefined' || str2[0] === 'undefined') {
+    return false;
+  }
+  if (str1[0] !== str2[0]) {
+    return false;
+  } else {
+    return compareStr(str1.slice(1), str2.slice(1));
+  }
 };
 
 // 16. Write a function that accepts a string and creates an array where each letter
 // occupies an index of the array.
 var createArray = function(str){
+  let arr = [];
+  if (str.length === 0) {
+    return arr;
+  } else {
+    return arr = arr.concat(arr.push(str[0]) + createArray(str.slice(1)));
+  }
 };
 
 // 17. Reverse the order of an array
