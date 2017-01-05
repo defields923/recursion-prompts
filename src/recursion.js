@@ -216,6 +216,12 @@ var divide = function(x, y) {
 // http://www.cse.wustl.edu/~kjg/cse131/Notes/Recursion/recursion.html
 // https://www.khanacademy.org/computing/computer-science/cryptography/modarithmetic/a/the-euclidean-algorithm
 var gcd = function(x, y) {
+  if (x <= 0) return null;
+  if (!y) {
+    return x;
+  } else {
+    return gcd(y, x % y);
+  }
 };
 
 // 15. Write a function that compares each character of two strings and returns true if
@@ -239,33 +245,68 @@ var compareStr = function(str1, str2) {
 // 16. Write a function that accepts a string and creates an array where each letter
 // occupies an index of the array.
 var createArray = function(str){
-  let arr = [];
+  // let arr = [];
+  // while (str.length > 0) {
+  //   arr.push(str.slice(0,1));
+  //   str = str.slice(1);
+  // }
+  // return arr;
+
+
   if (str.length === 0) {
-    return arr;
+    return [];
   } else {
-    return arr = arr.concat(arr.push(str[0]) + createArray(str.slice(1)));
+    return [str[0]].concat(createArray(str.slice(1)));
   }
+
+
 };
 
 // 17. Reverse the order of an array
 var reverseArr = function (array) {
+  if (array.length === 0) {
+    return [];
+  } else {
+    return [array[array.length - 1]].concat(reverseArr(array.slice(0, array.length - 1)));
+  }
+
+
 };
 
 // 18. Create a new array with a given value and length.
 // buildList(0,5) // [0,0,0,0,0]
 // buildList(7,3) // [7,7,7]
 var buildList = function(value, length) {
+  if (length === 0) {
+    return [];
+  } else {
+    return [value].concat(buildList(value, length - 1));
+  }
 };
 
 // 19. Count the occurence of a value inside a list.
 // countOccurrence([2,7,4,4,1,4], 4) // 3
 // countOccurrence([2,'banana',4,4,1,'banana'], 'banana') // 2
 var countOccurrence = function(array, value) {
+  if (array.length === 0) {
+    return 0;
+  } else {
+    if (array[0] === value) {
+      return countOccurrence(array.slice(1), value) + 1;
+    } else {
+      return countOccurrence(array.slice(1), value);
+    }
+  }
 };
 
 // 20. Write a recursive version of map.
 // rMap([1,2,3], timesTwo); // [2,4,6]
 var rMap = function(array, callback) {
+  if (array.length === 0) {
+    return [];
+  } else {
+    return [callback(array[0])].concat(rMap(array.slice(1), callback));
+  }
 };
 
 // 21. Write a function that counts the number of times a key occurs in an object.
@@ -273,6 +314,17 @@ var rMap = function(array, callback) {
 // countKeysInObj(testobj, 'r') // 1
 // countKeysInObj(testobj, 'e') // 2
 var countKeysInObj = function(obj, key) {
+  if (typeof obj !== 'object') {
+    return 0;
+  }
+  for (let prop in obj) {
+    if (prop === key) {
+      return countKeysInObj(obj[prop]) + 1;
+    } else {
+      return countKeysInObj(obj[prop]);
+    }
+  }
+
 };
 
 // 22. Write a function that counts the number of times a value occurs in an object.
@@ -293,6 +345,15 @@ var replaceKeysInObj = function(obj, key, newKey) {
 // fibonacci(5);  // [0, 1, 1, 2, 3, 5]
 // Note:  The 0 is not counted.
 var fibonacci = function(n) {
+
+
+  if (n <= 0) {
+    return null;
+  } else if (n === 1) {
+    return 1;
+  } else {
+    return [n].concat(fibonacci(n - 1)) [n].concat(fibonacci(n - 2));
+  }
 };
 
 // 25. Return the Fibonacci number located at index n of the Fibonacci sequence.
